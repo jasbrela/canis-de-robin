@@ -108,6 +108,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "UI",
+            "id": "72fe3260-6e6c-4480-a401-0d67156a3d00",
+            "actions": [
+                {
+                    "name": "ClosePopup",
+                    "type": "Button",
+                    "id": "4eb2787b-f696-4209-b28b-889a09e71924",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "22fcc18d-38fa-4f22-9e59-5827d7391392",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ClosePopup",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

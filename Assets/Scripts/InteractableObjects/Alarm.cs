@@ -3,18 +3,19 @@ using System.Collections;
 using Interfaces;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
 namespace InteractableObjects
 {
+    [RequireComponent(typeof(SpriteRenderer))]
     public class Alarm : MonoBehaviour, IInteractable
     {
         [SerializeField] private float timerIncrease;
         [SerializeField] private float secondsToAlarm;
         [SerializeField] private TextMeshProUGUI timerText;
         [SerializeField] private GameObject alarmObject;
-        
-        [SerializeField] Sprite normalSprite;
-        [SerializeField] Sprite hoverSprite;
+
+        [SerializeField] private Light2D light2D;
         
         private float _timer;
         private bool _alarmIsActivated;
@@ -39,14 +40,12 @@ namespace InteractableObjects
         {
             while (_alarmIsActivated)
             {
-                while (!_alarmIsActivated) yield return null;
-                
                 yield return new WaitForSecondsRealtime(timerIncrease);
                 _timer -= timerIncrease;
                 timerText.text = FormatTime(_timer);
-                if (Math.Abs(_timer - secondsToAlarm) < .05f)
+                if (_timer < 0f)
                 {
-                    Debug.Log("Lose");
+                    _timer = 0;
                     StopAlarm();
                 }
             }
@@ -67,18 +66,18 @@ namespace InteractableObjects
 
         private void StopAlarm()
         {
+            StopCoroutine(_alarmCoroutine);
             alarmObject.SetActive(false);
-            _alarmIsActivated = false;
         }
         
         public void OnEnterArea()
         {
-            _spriteRenderer.sprite = hoverSprite;
+            light2D.intensity = 0.55f;
         }
 
         public void OnQuitArea()
         {
-            _spriteRenderer.sprite = normalSprite;
+            light2D.intensity = 0;
         }
     }
 }

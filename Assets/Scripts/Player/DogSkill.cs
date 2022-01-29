@@ -23,7 +23,7 @@ namespace Player
         private void ToggleSkill(Character character)
         {
             if (globalLight == null) throw new NullReferenceException("No Global Light2D was assigned.");
-            globalLight.intensity = character == Character.Dog ? 1f : 0.25f;
+            globalLight.intensity = character == Character.Dog ? 0.25f : 0.1f;
         }
     }
 }

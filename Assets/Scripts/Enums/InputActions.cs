@@ -6,6 +6,7 @@ namespace Enums
         MoveRight,
         Crouch,
         ChangeCharacter,
-        Interact
+        Interact,
+        ClosePopup
     }
 }
