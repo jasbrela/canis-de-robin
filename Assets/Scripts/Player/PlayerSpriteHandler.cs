@@ -27,7 +27,6 @@ namespace Player
         private void Update()
         {
             if (_animator == null) return;
-            
             _animator.SetFloat(Speed, _rigidbody2D.velocity.magnitude);
         }
 

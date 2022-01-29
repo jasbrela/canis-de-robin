@@ -1,4 +1,3 @@
-using System.Net.NetworkInformation;
 using Interfaces;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
@@ -20,6 +19,7 @@ namespace InteractableObjects
         private void GeneratePassword()
         {
             _password = Random.Range(1000, 10000);
+            EventHandler.Instance.TriggerOnPasswordGenerated(_password);
         }
         
         public void OnEnterArea()

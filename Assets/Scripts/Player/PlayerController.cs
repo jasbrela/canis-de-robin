@@ -16,6 +16,7 @@ namespace Player
         [SerializeField] private float maxDistance;
         
         private Directions _lastFacingDirection = Directions.Right;
+        private Directions _otherFacingDirection = Directions.Right;
         private bool _otherIsNear;
         private PlayerInput _input;
         private Rigidbody2D _mainCharacterRb2D;
@@ -47,24 +48,21 @@ namespace Player
         {
             StopMovement();
 
+            _otherCharacterRb2D = _mainCharacterRb2D;
+            _otherCharacter = _currentCharacter;
+            (_otherFacingDirection, _lastFacingDirection) = (_lastFacingDirection, _otherFacingDirection);
+
             switch (_currentCharacter)
             {
                 case Character.Human:
-                    _otherCharacterRb2D = _mainCharacterRb2D;
                     _mainCharacterRb2D = dog;
-                    
-                    _otherCharacter = _currentCharacter;
                     _currentCharacter = Character.Dog;
                     break;
                 case Character.Dog:
-                    _otherCharacterRb2D = _mainCharacterRb2D;
                     _mainCharacterRb2D = human;
-                    
-                    _otherCharacter = _currentCharacter;
                     _currentCharacter = Character.Human;
                     break;
             }
-
             EventHandler.Instance.TriggerOnChangeCurrentCharacter(_currentCharacter);
         }
 
@@ -73,12 +71,11 @@ namespace Player
             Vector2 vec = dir == Directions.Left ? Vector2.left : Vector2.right;
 
             _mainCharacterRb2D.AddRelativeForce(vec * force, ForceMode2D.Force);
+
+            if (_lastFacingDirection == dir) return;
             
-            if (_lastFacingDirection != dir)
-            {
-                _lastFacingDirection = dir;
-                EventHandler.Instance.TriggerOnChangeFacingDirection(vec, _currentCharacter);
-            }
+            _lastFacingDirection = dir;
+            EventHandler.Instance.TriggerOnChangeFacingDirection(vec, _currentCharacter);
         }
 
         private void Update()
@@ -88,11 +85,19 @@ namespace Player
             if (!_otherIsNear)
             {
                 if (_otherCharacterRb2D.velocity.magnitude > otherMaxVelocity) return;
-
-                Vector2 otherVec = _otherCharacterRb2D.transform.position.x > _mainCharacterRb2D.transform.position.x
-                    ? Vector2.left
-                    : Vector2.right;
                 
+                Vector2 otherVec;
+                if (_otherCharacterRb2D.transform.position.x > _mainCharacterRb2D.transform.position.x)
+                {
+                    otherVec = Vector2.left;
+                    _otherFacingDirection = Directions.Left;
+                }
+                else
+                {
+                    otherVec = Vector2.right;
+                    _otherFacingDirection = Directions.Right;
+                }
+
                 _otherCharacterRb2D.AddRelativeForce(otherVec * otherForce, ForceMode2D.Force);
                 EventHandler.Instance.TriggerOnChangeFacingDirection(otherVec, _otherCharacter);
             }

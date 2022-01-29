@@ -6,9 +6,11 @@ using UnityEngine.InputSystem;
 public class PopupManager : MonoBehaviour
 {
     [SerializeField] private PlayerInput input;
+    [SerializeField] private GameObject diskPopup;
     [SerializeField] private GameObject popup;
     [SerializeField] private TextMeshProUGUI msg;
-    
+
+    private GameObject openedPopup;
     private void Start()
     {
         SetUpControls();
@@ -23,6 +25,15 @@ public class PopupManager : MonoBehaviour
     private void ListenToEvents()
     {
         EventHandler.Instance.ListenToOnShowPopupMessage(ShowPopupMessage);
+        EventHandler.Instance.ListenToOnInteractWithDisk(ShowDiskPopup);
+    }
+    
+    private void ShowDiskPopup()
+    {
+        input.SwitchCurrentActionMap(ActionMaps.UI.ToString());
+
+        diskPopup.SetActive(true);
+        openedPopup = diskPopup;
     }
 
     private void ShowPopupMessage(string message)
@@ -31,11 +42,12 @@ public class PopupManager : MonoBehaviour
 
         msg.text = message;
         popup.SetActive(true);
+        openedPopup = popup;
     }
 
     private void ClosePopup()
     {
         input.SwitchCurrentActionMap(ActionMaps.Player.ToString());
-        popup.SetActive(false);
+        openedPopup.SetActive(false);
     }
 }

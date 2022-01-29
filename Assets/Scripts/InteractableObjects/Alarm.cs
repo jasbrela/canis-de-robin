@@ -4,6 +4,7 @@ using Interfaces;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
+using UnityEngine.SceneManagement;
 
 namespace InteractableObjects
 {
@@ -43,11 +44,12 @@ namespace InteractableObjects
                 yield return new WaitForSecondsRealtime(timerIncrease);
                 _timer -= timerIncrease;
                 timerText.text = FormatTime(_timer);
-                if (_timer < 0f)
-                {
-                    _timer = 0;
-                    StopAlarm();
-                }
+                
+                if (!(_timer < 0f)) continue;
+                
+                _timer = 0;
+                StopAlarm();
+                SceneManager.LoadScene(Scenes.GameOver.ToString());
             }
         }
 

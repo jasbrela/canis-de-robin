@@ -59,6 +59,20 @@ public class EventHandler : MonoBehaviour
     }
     
     
+    public delegate void OnInteractWithDisk();
+    private OnInteractWithDisk _onInteractWithDisk;
+
+    public void ListenToOnInteractWithDisk(OnInteractWithDisk method)
+    {
+        _onInteractWithDisk += method;
+    } 
+    
+    public void TriggerOnInteractWithDisk()
+    {
+        _onInteractWithDisk?.Invoke();
+    }
+    
+    
     public delegate void OnChangeCurrentCharacter(Character currentCharacter);
     private OnChangeCurrentCharacter _onChangeCurrentCharacter;
 
@@ -70,5 +84,19 @@ public class EventHandler : MonoBehaviour
     public void TriggerOnChangeCurrentCharacter(Character currentCharacterTransform)
     {
         _onChangeCurrentCharacter?.Invoke(currentCharacterTransform);
+    }
+    
+    
+    public delegate void OnPasswordGenerated(int pass);
+    private OnPasswordGenerated _onPasswordGenerated;
+
+    public void ListenToOnPasswordGenerated(OnPasswordGenerated method)
+    {
+        _onPasswordGenerated += method;
+    } 
+    
+    public void TriggerOnPasswordGenerated(int pass)
+    {
+        _onPasswordGenerated?.Invoke(pass);
     }
 }

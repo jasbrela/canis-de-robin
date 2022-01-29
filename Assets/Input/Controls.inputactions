@@ -134,6 +134,17 @@
                     "action": "ClosePopup",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6a228773-80e8-4551-a9af-88b1914108a4",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ClosePopup",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

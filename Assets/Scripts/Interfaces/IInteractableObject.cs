@@ -2,10 +2,8 @@ namespace Interfaces
 {
     public interface IInteractable
     {
-        void OnEnterArea();
         void OnInteract();
+        void OnEnterArea();
         void OnQuitArea();
-        
-        // https://github.com/jasbrela/fishing-system/blob/main/Assets/Scripts/FishingTrigger.cs
     }
 }
