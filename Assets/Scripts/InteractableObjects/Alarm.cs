@@ -29,11 +29,6 @@ namespace InteractableObjects
             StartAlarm();
         }
 
-        private void ListenToEvents()
-        {
-            
-        }
-
         private void StartAlarm()
         {
             alarmObject.SetActive(true);
