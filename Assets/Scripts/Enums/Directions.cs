@@ -1,8 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public enum Directions
+namespace Enums
 {
-    Left, Right
+    public enum Directions
+    {
+        Left,
+        Right
+    }
 }

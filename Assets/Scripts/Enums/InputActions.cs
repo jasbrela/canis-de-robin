@@ -1,4 +1,11 @@
-public enum InputActions
+namespace Enums
 {
-    MoveLeft, MoveRight, ChangeCharacter
+    public enum InputActions
+    {
+        MoveLeft,
+        MoveRight,
+        Crouch,
+        ChangeCharacter,
+        Interact
+    }
 }
