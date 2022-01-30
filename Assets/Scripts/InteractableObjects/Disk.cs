@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace InteractableObjects
 {
-    public class Disk : MonoBehaviour, IInteractable
+    public class Disk : MonoBehaviour, IInteractable, ICollectible
     {
         [SerializeField] private TextMeshProUGUI passwordText;
         private int _password;
@@ -31,12 +31,12 @@ namespace InteractableObjects
             EventHandler.Instance.TriggerOnInteractWithDisk();
         }
 
-        public void OnEnterArea()
+        public void OnEnterRange()
         {
             /*throw new System.NotImplementedException();*/
         }
 
-        public void OnQuitArea()
+        public void OnQuitRange()
         {
             /*throw new System.NotImplementedException();*/
         }
@@ -84,6 +84,11 @@ namespace InteractableObjects
             }
 
             passwordText.text = final;
+        }
+
+        public void OnCollect()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

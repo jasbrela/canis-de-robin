@@ -21,12 +21,12 @@ namespace InteractableObjects
             EventHandler.Instance.TriggerOnShowPopupMessage("Tried to steal");
         }
         
-        public void OnEnterArea()
+        public void OnEnterRange()
         {
             _spriteRenderer.sprite = hoverSprite;
         }
 
-        public void OnQuitArea()
+        public void OnQuitRange()
         {
             _spriteRenderer.sprite = normalSprite;
         }

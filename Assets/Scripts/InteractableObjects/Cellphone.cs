@@ -4,7 +4,7 @@ using UnityEngine.Experimental.Rendering.Universal;
 
 namespace InteractableObjects
 {
-    public class Cellphone : MonoBehaviour, IInteractable
+    public class Cellphone : MonoBehaviour, IInteractable, ICollectible
     {
         [SerializeField] private Light2D light2D;
 
@@ -22,14 +22,19 @@ namespace InteractableObjects
             EventHandler.Instance.TriggerOnPasswordGenerated(_password);
         }
         
-        public void OnEnterArea()
+        public void OnEnterRange()
         {
             light2D.intensity = 1;
         }
 
-        public void OnQuitArea()
+        public void OnQuitRange()
         {
             light2D.intensity = 0;
+        }
+
+        public void OnCollect()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

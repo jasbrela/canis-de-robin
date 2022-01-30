@@ -64,9 +64,9 @@ namespace Player
 
                 if (_currentTarget == interactable) return;
 
-                _currentTarget?.OnQuitArea();
+                _currentTarget?.OnQuitRange();
                 _currentTarget = interactable;
-                _currentTarget.OnEnterArea();
+                _currentTarget.OnEnterRange();
             }
             else
             {
@@ -78,7 +78,7 @@ namespace Player
         {
             if (_currentTarget == null) return;
 
-            _currentTarget.OnQuitArea();
+            _currentTarget.OnQuitRange();
             _currentTarget = null;
         }
         

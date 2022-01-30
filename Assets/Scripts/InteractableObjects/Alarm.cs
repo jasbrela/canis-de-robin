@@ -72,12 +72,12 @@ namespace InteractableObjects
             alarmObject.SetActive(false);
         }
         
-        public void OnEnterArea()
+        public void OnEnterRange()
         {
             light2D.intensity = 0.55f;
         }
 
-        public void OnQuitArea()
+        public void OnQuitRange()
         {
             light2D.intensity = 0;
         }

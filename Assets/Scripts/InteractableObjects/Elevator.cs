@@ -38,13 +38,13 @@ namespace InteractableObjects
             StartCoroutine(UseElevator());
         }
         
-        public void OnEnterArea()
+        public void OnEnterRange()
         {
             Debug.Log("Enter");
             // open doors
         }
 
-        public void OnQuitArea()
+        public void OnQuitRange()
         {
             Debug.Log("Quit");
             //if (_isElevatorActive) return; // don't open, wait for elevator to arrive
