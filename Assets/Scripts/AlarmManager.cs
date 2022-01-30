@@ -15,7 +15,7 @@ public class AlarmManager : MonoBehaviour
     private bool _inGracePeriod;
     private Coroutine _alarmCoroutine;
     
-    void Start()
+    void Awake()
     {
         EventHandler.Instance.ListenToOnAlarmIsDeactivated(ResetAlarm);
         EventHandler.Instance.ListenToOnGameOver(OnGameOver);

@@ -126,13 +126,5 @@ namespace Player
         {
             transform.position = new Vector3(transform.position.x, y, transform.position.z);
         }
-
-        private void OnTriggerEnter2D(Collider2D col)
-        {
-            if (col.CompareTag("Deadzone"))
-            {
-                EventHandler.Instance.TriggerOnGameOver();
-            }
-        }
     }
 }
