@@ -22,7 +22,6 @@ namespace InteractableObjects
         private void Start()
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
-            if (isStartAlarm) OnInteract();
         }
 
         public void SetSprite(Sprite sprite)
@@ -38,6 +37,11 @@ namespace InteractableObjects
 
         public void OnInteract()
         {
+            if (isStartAlarm) EventHandler.Instance.TriggerOnShowPopupMessage(
+                "Era esperado que um cara como o Lone Sumk tivesse um ótimo sistema de alarmes, " +
+                "ele só não esperava que quem iria roubar a casa dele seria um dos seus " +
+                "engenheiros de segurança da informação...");
+                
             if (_isDeactivated) return;
             _isDeactivated = true;
             EventHandler.Instance.TriggerOnAlarmIsDeactivated(this);
