@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class AlarmManager : MonoBehaviour
 {
+    [SerializeField] private Sprite activatedSprite;
+    [SerializeField] private Sprite deactivatedSprite;
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private GameObject alarmObject;
     [SerializeField] private float timerIncrease;
@@ -23,11 +25,17 @@ public class AlarmManager : MonoBehaviour
     
     private void ResetAlarm(Alarm newAlarm)
     {
-        if (_currentAlarm != null) _currentAlarm.ActivateAlarm();
+        if (_currentAlarm != null)
+        {
+            _currentAlarm.ActivateAlarm();
+            _currentAlarm.SetSprite(activatedSprite);
+        }
+        
         if (_alarmCoroutine != null) StopCoroutine(_alarmCoroutine);
         
         _currentAlarm = newAlarm;
         _timer = _currentAlarm.GetGracePeriod();
+        _currentAlarm.SetSprite(deactivatedSprite);
         
         timerText.text = FormatTime(0);
         

@@ -1,22 +1,33 @@
+using System;
 using System.Collections;
 using Interfaces;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
 namespace InteractableObjects
 {
+    [RequireComponent(typeof(SpriteRenderer))]
     public class Alarm : MonoBehaviour, IInteractable
     {
         [SerializeField] private int gracePeriod;
         [SerializeField] private bool isStartAlarm;
         [CanBeNull][SerializeField] private GameObject protectedAreaLeft;
         [CanBeNull][SerializeField] private GameObject protectedAreaRight;
-
+        [SerializeField] private Light2D hover;
+        
         private bool _isDeactivated;
+        private SpriteRenderer _spriteRenderer;
 
         private void Start()
         {
+            _spriteRenderer = GetComponent<SpriteRenderer>();
             if (isStartAlarm) OnInteract();
+        }
+
+        public void SetSprite(Sprite sprite)
+        {
+            _spriteRenderer.sprite = sprite;
         }
 
         public void ActivateAlarm()
@@ -47,12 +58,13 @@ namespace InteractableObjects
         
         public void OnEnterRange()
         {
-            Debug.Log("Entered range of: " + gameObject.name);
+            if (_isDeactivated) return;
+            hover.intensity = 0.4f;
         }
 
         public void OnQuitRange()
         {
-            Debug.Log("Quit range of: " + gameObject.name);
+            hover.intensity = 0;
         }
         
         private void ProtectAreas()
