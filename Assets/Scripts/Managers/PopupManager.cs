@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 namespace Managers
 {
+    [RequireComponent(typeof(AudioSource))]
     public class PopupManager : MonoBehaviour
     {
         [SerializeField] private PlayerInput input;
@@ -18,12 +19,14 @@ namespace Managers
         [SerializeField] private GameObject collectableButtons;
         [SerializeField] private GameObject victoryButtons;
         [SerializeField] private Image itemFound;
-    
+
+        private AudioSource _audioSource;
         private GameObject _openedPopup;
         private ICollectible _currentCollectible;
     
         private void Start()
         {
+            _audioSource = GetComponent<AudioSource>();
             SetUpControls();
             ListenToEvents();
         }
@@ -57,6 +60,7 @@ namespace Managers
 
         private void ShowPopupMessage(string message)
         {
+            _audioSource.Play();
             input.SwitchCurrentActionMap(ActionMaps.UI.ToString());
 
             msg.text = message;
@@ -98,6 +102,7 @@ namespace Managers
     
         private void ClosePopup()
         {
+            if (_audioSource.isPlaying) _audioSource.Stop();
             input.SwitchCurrentActionMap(ActionMaps.Player.ToString());
             if (_openedPopup != null) _openedPopup.SetActive(false);
         
@@ -109,8 +114,8 @@ namespace Managers
         private void ShowVictoryPopup()
         {
             victoryButtons.SetActive(true);
-            ShowPopupMessage("Agora que Robin conseguiu encontrar os dados sobre a tecnologia para" +
-                             " transformar grafite em ouro, tem uma grande decisão a tomar.");
+            ShowPopupMessage("Agora que eu consegui encontrar os dados sobre a tecnologia para" +
+                             " transformar grafite em ouro, tenho uma grande decisão a tomar.");
         }
 
         private void OnClickGood()
