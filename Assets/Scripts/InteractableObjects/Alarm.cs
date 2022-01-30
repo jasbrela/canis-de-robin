@@ -9,8 +9,8 @@ namespace InteractableObjects
     {
         [SerializeField] private int gracePeriod;
         [SerializeField] private bool isStartAlarm;
-        [CanBeNull][SerializeField] private BoxCollider2D protectedAreaLeft;
-        [CanBeNull][SerializeField] private BoxCollider2D protectedAreaRight;
+        [CanBeNull][SerializeField] private GameObject protectedAreaLeft;
+        [CanBeNull][SerializeField] private GameObject protectedAreaRight;
 
         private bool _isDeactivated;
 
@@ -57,14 +57,14 @@ namespace InteractableObjects
         
         private void ProtectAreas()
         {
-            if (protectedAreaLeft != null) protectedAreaLeft.enabled = true;
-            if (protectedAreaRight != null) protectedAreaRight.enabled = true;
+            if (protectedAreaLeft != null) protectedAreaLeft.SetActive(true);
+            if (protectedAreaRight != null) protectedAreaRight.SetActive(true);
         }
         
         private void FreeAreas()
         {
-            if (protectedAreaLeft != null) protectedAreaLeft.enabled = false;
-            if (protectedAreaRight != null) protectedAreaRight.enabled = false;
+            if (protectedAreaLeft != null) protectedAreaLeft.SetActive(false);
+            if (protectedAreaRight != null) protectedAreaRight.SetActive(false);
         }
     }
 }
