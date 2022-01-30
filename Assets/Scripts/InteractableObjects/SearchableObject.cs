@@ -2,11 +2,13 @@ using Enums;
 using Interfaces;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
 namespace InteractableObjects
 {
     public class SearchableObject : MonoBehaviour, IInteractable
     {
+        [SerializeField] private Light2D hover;
         [SerializeField] private Collectibles type;
         
         [CanBeNull] private ICollectible _collectible;
@@ -63,15 +65,12 @@ namespace InteractableObjects
 
         public void OnEnterRange()
         {
-            Debug.Log("Entered range - " + gameObject.name);
-            // show hvoer sprite
+            hover.intensity = 1;
         }
 
         public void OnQuitRange()
         {
-            Debug.Log("Quit range - " + gameObject.name);
-
-            // show normal sprite
+            hover.intensity = 0;
         }
     }
 }

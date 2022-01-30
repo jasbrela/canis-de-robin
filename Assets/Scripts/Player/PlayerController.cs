@@ -31,22 +31,34 @@ namespace Player
             _otherCharacterRb2D = dog;
 
             EventHandler.Instance.ListenToOnMoveElevator(ChangeFloor);
+            EventHandler.Instance.ListenToOnGameOver(UnsubscribeControls);
             
             SetUpControls();
         }
-
+        
         private void SetUpControls()
         {
-            _input.actions[InputActions.MoveLeft.ToString()].performed += _ => Move(PlayerDirections.Left);
-            _input.actions[InputActions.MoveLeft.ToString()].canceled += _ => StopMovement();
+            _input.actions[InputActions.MoveLeft.ToString()].performed += MoveLeft;
+            _input.actions[InputActions.MoveLeft.ToString()].canceled += StopMovementThroughControls;
 
-            _input.actions[InputActions.MoveRight.ToString()].performed += _ => Move(PlayerDirections.Right);
-            _input.actions[InputActions.MoveRight.ToString()].canceled += _ => StopMovement();
+            _input.actions[InputActions.MoveRight.ToString()].performed += MoveRight;
+            _input.actions[InputActions.MoveRight.ToString()].canceled += StopMovementThroughControls;
 
-            _input.actions[InputActions.ChangeCharacter.ToString()].performed += _ => ChangeCharacter();
+            _input.actions[InputActions.ChangeCharacter.ToString()].performed += ChangeCharacter;
         }
 
-        private void ChangeCharacter()
+        private void UnsubscribeControls()
+        {
+            _input.actions[InputActions.MoveLeft.ToString()].performed -= MoveLeft;
+            _input.actions[InputActions.MoveLeft.ToString()].canceled -= StopMovementThroughControls;
+
+            _input.actions[InputActions.MoveRight.ToString()].performed -= MoveRight;
+            _input.actions[InputActions.MoveRight.ToString()].canceled -= StopMovementThroughControls;
+
+            _input.actions[InputActions.ChangeCharacter.ToString()].performed -= ChangeCharacter;
+        }
+
+        private void ChangeCharacter(InputAction.CallbackContext context)
         {
             StopMovement();
 
@@ -68,6 +80,16 @@ namespace Player
             EventHandler.Instance.TriggerOnChangeCurrentCharacter(_currentCharacter);
         }
 
+        private void MoveLeft(InputAction.CallbackContext context)
+        {
+            Move(PlayerDirections.Left);
+        }
+        
+        private void MoveRight(InputAction.CallbackContext context)
+        {
+            Move(PlayerDirections.Right);
+        }
+        
         private void Move(PlayerDirections dir)
         {
             if (_mainCharacterRb2D == null) return;
@@ -111,6 +133,11 @@ namespace Player
             }
         }
 
+        private void StopMovementThroughControls(InputAction.CallbackContext callbackContext)
+        {
+            StopMovement();
+        }
+        
         private void StopMovement()
         {
             if (_mainCharacterRb2D == null) return;

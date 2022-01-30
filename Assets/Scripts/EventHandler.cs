@@ -3,6 +3,7 @@ using Enums;
 using InteractableObjects;
 using Interfaces;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EventHandler : MonoBehaviour
 {
@@ -73,6 +74,20 @@ public class EventHandler : MonoBehaviour
     public void TriggerOnShowPopupMessageWithOptions(ICollectible collectible)
     {
         _onShowPopupMessageWithOptions?.Invoke(collectible);
+    }
+    
+    
+    public delegate void OnShowVictoryPopup();
+    private OnShowVictoryPopup _onShowVictoryPopup;
+
+    public void ListenToOnShowVictoryPopup(OnShowVictoryPopup method)
+    {
+        _onShowVictoryPopup += method;
+    } 
+    
+    public void TriggerOnShowVictoryPopup()
+    {
+        _onShowVictoryPopup?.Invoke();
     }
     
     
@@ -171,5 +186,6 @@ public class EventHandler : MonoBehaviour
     public void TriggerOnGameOver()
     {
         _onGameOver?.Invoke();
+        SceneManager.LoadScene(Scenes.GameOver.ToString());
     }
 }

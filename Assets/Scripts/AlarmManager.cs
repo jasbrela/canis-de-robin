@@ -2,7 +2,6 @@ using System.Collections;
 using InteractableObjects;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class AlarmManager : MonoBehaviour
 {
@@ -20,7 +19,6 @@ public class AlarmManager : MonoBehaviour
     void Awake()
     {
         EventHandler.Instance.ListenToOnAlarmIsDeactivated(ResetAlarm);
-        EventHandler.Instance.ListenToOnGameOver(OnGameOver);
     }
     
     private void ResetAlarm(Alarm newAlarm)
@@ -52,7 +50,8 @@ public class AlarmManager : MonoBehaviour
             _timer -= timerIncrease;
             if (_timer < 0f)
             {
-                EventHandler.Instance.TriggerOnGameOver();
+                timerText.text = FormatTime(0);
+                StopAlarm();
             }
             else
             {
@@ -61,13 +60,6 @@ public class AlarmManager : MonoBehaviour
         }
     }
 
-    private void OnGameOver()
-    {
-        timerText.text = FormatTime(0);
-        StopAlarm();
-        SceneManager.LoadScene(Scenes.GameOver.ToString());
-    }
-    
     private string FormatTime( float time )
     {
         int minutes = (int) time / 60 ;

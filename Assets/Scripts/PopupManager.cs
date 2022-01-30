@@ -1,6 +1,6 @@
+using System;
 using Enums;
 using Interfaces;
-using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -14,7 +14,8 @@ public class PopupManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI msg;
     [SerializeField] private TextMeshProUGUI cancelBtn;
     [SerializeField] private TextMeshProUGUI collectBtn;
-    [SerializeField] private GameObject buttons;
+    [SerializeField] private GameObject collectableButtons;
+    [SerializeField] private GameObject victoryButtons;
     [SerializeField] private Image itemFound;
     
     private GameObject _openedPopup;
@@ -28,14 +29,21 @@ public class PopupManager : MonoBehaviour
 
     private void SetUpControls()
     {
-        input.actions[InputActions.ClosePopup.ToString()].performed += _ => ClosePopup();
+        input.actions[InputActions.ClosePopup.ToString()].performed += ClosePopupThroughControls;
+    }
+
+    private void UnsubscribeControls()
+    {
+        input.actions[InputActions.ClosePopup.ToString()].performed -= ClosePopupThroughControls;
     }
 
     private void ListenToEvents()
     {
         EventHandler.Instance.ListenToOnShowPopupMessage(ShowPopupMessage);
+        EventHandler.Instance.ListenToOnShowVictoryPopup(ShowVictoryPopup);
         EventHandler.Instance.ListenToOnShowPopupMessageWithOptions(ShowPopupMessageWithOptions);
         EventHandler.Instance.ListenToOnInteractWithDisk(ShowDiskPopup);
+        EventHandler.Instance.ListenToOnGameOver(UnsubscribeControls);
     }
     
     private void ShowDiskPopup()
@@ -65,7 +73,7 @@ public class PopupManager : MonoBehaviour
         collectBtn.text = data.collectMsg;
         cancelBtn.text = data.cancelMsg;
         itemFound.gameObject.SetActive(true);
-        buttons.SetActive(true);
+        collectableButtons.SetActive(true);
         ShowPopupMessage(data.message);
     }
 
@@ -82,12 +90,37 @@ public class PopupManager : MonoBehaviour
         ClosePopup();
     }
 
+    private void ClosePopupThroughControls(InputAction.CallbackContext callbackContext)
+    {
+        ClosePopup();
+    }
+    
     private void ClosePopup()
     {
         input.SwitchCurrentActionMap(ActionMaps.Player.ToString());
-        _openedPopup.SetActive(false);
+        if (_openedPopup != null) _openedPopup.SetActive(false);
         
         itemFound.gameObject.SetActive(false);
-        buttons.SetActive(false);
+        collectableButtons.SetActive(false);
+        victoryButtons.SetActive(false);
+    }
+
+    private void ShowVictoryPopup()
+    {
+        victoryButtons.SetActive(true);
+        ShowPopupMessage("Agora que Robin conseguiu encontrar os dados sobre a tecnologia para" +
+                         " transformar grafite em ouro, tem uma grande decisão a tomar.");
+    }
+
+    private void OnClickGood()
+    {
+        ClosePopup();
+        // go to good scene
+    }
+    
+    private void OnClickBad()
+    {
+        ClosePopup();
+        // go to bad scene
     }
 }

@@ -38,8 +38,7 @@ namespace InteractableObjects
             int.TryParse(_input, out int attempt);
             if (attempt == _password)
             {
-                Debug.Log("Correct!");
-                // correct
+                EventHandler.Instance.TriggerOnShowVictoryPopup();
             }
             else
             {

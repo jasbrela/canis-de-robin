@@ -1,3 +1,4 @@
+using System;
 using Enums;
 using Interfaces;
 using UnityEngine;
@@ -23,14 +24,15 @@ namespace Player
             ListenToEvents();
             
             _input = GetComponent<PlayerInput>();
-
+            
             SetUpControls();
         }
-        
+
         private void ListenToEvents()
         {
             EventHandler.Instance.ListenToOnChangeFacingDirection(ChangeFacingDirection);
             EventHandler.Instance.ListenToOnChangeCurrentCharacter(ChangeCurrentCharacter);
+            EventHandler.Instance.ListenToOnGameOver(UnsubscribeControls);
         }
         private void Update()
         {
@@ -45,7 +47,7 @@ namespace Player
 
         private void ChangeFacingDirection(Vector2 direction, Character character)
         {
-            _forward = direction;
+            if (character == Character.Human) _forward = direction;
         }
 
         private void RaycastForInteractable()
@@ -83,10 +85,16 @@ namespace Player
         
         private void SetUpControls()
         {
-            _input.actions[InputActions.Interact.ToString()].performed += _ => Interact();
+            _input.actions[InputActions.Interact.ToString()].performed += Interact;
+        }
+
+        private void UnsubscribeControls()
+        {
+            _input.actions[InputActions.Interact.ToString()].performed -= Interact;
+
         }
         
-        private void Interact()
+        private void Interact(InputAction.CallbackContext callbackContext)
         {
             _currentTarget?.OnInteract();
         }

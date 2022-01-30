@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   sprite: {fileID: -4004860913340282569, guid: 5e8c3e1832d4f064e93e7acc1245e705, type: 3}
-  message: "Eu encontrei um disquete! Mas ele est\xE1 bloqueado por uma senha. Qual
-    deve ser a senha?"
+  message: "Aqui est\xE1 o disquete... Finalmente! Mas ele est\xE1 bloqueado por
+    uma senha. Qual deve ser a senha?"
   cancelMsg: "Deixar para l\xE1"
   collectMsg: Tentar colocar a senha
