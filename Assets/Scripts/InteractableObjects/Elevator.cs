@@ -1,6 +1,7 @@
 using System.Collections;
 using Enums;
 using Interfaces;
+using Managers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,6 +9,7 @@ namespace InteractableObjects
 {
     public class Elevator : MonoBehaviour, IInteractable
     {
+        [SerializeField] private AudioClip elevatorSound;
         [SerializeField] private ElevatorDirections floor;
         [SerializeField] private float duration;
         [SerializeField] private PlayerInput input;
@@ -23,6 +25,7 @@ namespace InteractableObjects
 
         private IEnumerator UseElevator()
         {
+            SoundManager.Instance.PlaySound(elevatorSound);
             input.DeactivateInput();
             var destination = _currentFloor == ElevatorDirections.Down ? downPart.position : upPart.position;
             

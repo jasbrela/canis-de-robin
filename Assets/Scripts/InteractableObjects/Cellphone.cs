@@ -1,4 +1,5 @@
 using Interfaces;
+using Managers;
 using UnityEngine;
 
 namespace InteractableObjects

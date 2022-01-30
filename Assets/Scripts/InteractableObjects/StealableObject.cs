@@ -1,6 +1,6 @@
-using System;
 using Interfaces;
 using UnityEngine;
+using EventHandler = Managers.EventHandler;
 
 namespace InteractableObjects
 {

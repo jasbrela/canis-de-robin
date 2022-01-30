@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98ee9b48191d5a247bd4f33692814dd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivatedSound: {fileID: 8300000, guid: 24b708b3b50188141b007637fe85f57a, type: 3}
   gracePeriod: 30
   isStartAlarm: 1
   protectedAreaLeft: {fileID: 0}

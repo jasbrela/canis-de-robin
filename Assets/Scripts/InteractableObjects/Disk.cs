@@ -1,4 +1,5 @@
 using Interfaces;
+using Managers;
 using TMPro;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ namespace InteractableObjects
 {
     public class Disk : MonoBehaviour, ICollectible
     {
+        [SerializeField] private AudioClip correct;
         [SerializeField] private Collectible data;
         [SerializeField] private TextMeshProUGUI passwordText;
         private int _password;
@@ -38,11 +40,11 @@ namespace InteractableObjects
             int.TryParse(_input, out int attempt);
             if (attempt == _password)
             {
+                SoundManager.Instance.PlaySound(correct);
                 EventHandler.Instance.TriggerOnShowVictoryPopup();
             }
             else
             {
-                Debug.Log("WRONG");
                 OnClickClear();
             }
         }

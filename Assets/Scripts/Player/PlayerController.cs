@@ -1,7 +1,7 @@
-using System;
 using Enums;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using EventHandler = Managers.EventHandler;
 
 namespace Player
 {

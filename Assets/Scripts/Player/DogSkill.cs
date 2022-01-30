@@ -2,6 +2,7 @@ using System;
 using Enums;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
+using EventHandler = Managers.EventHandler;
 
 namespace Player
 {

@@ -47,8 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 294533ec29f7c0d4a8957ab6705c510f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  elevatorSound: {fileID: 8300000, guid: c4132770aa2a7a34294ed51221855f13, type: 3}
   floor: 0
-  duration: 0
+  duration: 1
   input: {fileID: 0}
   upPart: {fileID: 1331283213339618717}
   downPart: {fileID: 2524235573878219312}
@@ -91,16 +92,6 @@ CompositeCollider2D:
   m_GenerationType: 0
   m_EdgeRadius: 0
   m_ColliderPaths:
-  - m_Collider: {fileID: 1685796622273588262}
-    m_ColliderPaths:
-    - - X: 1249707
-        Y: -17517566
-      - X: 1249707
-        Y: 115193392
-      - X: -1250000
-        Y: 115193099
-      - X: -1249707
-        Y: -17517566
   - m_Collider: {fileID: 1942332789387295527}
     m_ColliderPaths:
     - - X: 1249707
@@ -111,6 +102,16 @@ CompositeCollider2D:
         Y: 252123275
       - X: -1249707
         Y: 119050256
+  - m_Collider: {fileID: 1685796622273588262}
+    m_ColliderPaths:
+    - - X: 1249707
+        Y: -17517566
+      - X: 1249707
+        Y: 115193392
+      - X: -1250000
+        Y: 115193099
+      - X: -1249707
+        Y: -17517566
   m_CompositePaths:
     m_Paths:
     - - {x: 0.1249414, y: 11.9050255}

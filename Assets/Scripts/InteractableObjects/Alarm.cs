@@ -1,15 +1,17 @@
-using System;
 using System.Collections;
 using Interfaces;
 using JetBrains.Annotations;
+using Managers;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
+using EventHandler = Managers.EventHandler;
 
 namespace InteractableObjects
 {
     [RequireComponent(typeof(SpriteRenderer))]
     public class Alarm : MonoBehaviour, IInteractable
     {
+        [SerializeField] private AudioClip deactivatedSound;
         [SerializeField] private int gracePeriod;
         [SerializeField] private bool isStartAlarm;
         [CanBeNull][SerializeField] private GameObject protectedAreaLeft;
@@ -44,6 +46,7 @@ namespace InteractableObjects
                 
             if (_isDeactivated) return;
             _isDeactivated = true;
+            SoundManager.Instance.PlaySound(deactivatedSound);
             EventHandler.Instance.TriggerOnAlarmIsDeactivated(this);
             FreeAreas();
             StartCoroutine(StartGracePeriod());

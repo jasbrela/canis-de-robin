@@ -1,12 +1,21 @@
+using System;
 using Interfaces;
 using UnityEngine;
+using EventHandler = Managers.EventHandler;
 
 namespace InteractableObjects
 {
+    [RequireComponent(typeof(Animator))]
     public class Dog : MonoBehaviour, IInteractable
     {
-        [SerializeField] private Animator _animator;
-        
+        private Animator _animator;
+        private static readonly int PossibleInteraction = Animator.StringToHash("PossibleInteraction");
+
+        private void Start()
+        {
+            _animator = GetComponent<Animator>();
+        }
+
         public void OnInteract()
         {
             EventHandler.Instance.TriggerOnShowPopupMessage("Se a gente conseguir as informações sobre o sistema para" +
@@ -17,12 +26,12 @@ namespace InteractableObjects
 
         public void OnEnterRange()
         {
-            //_animator.SetBool("PossibleInteraction", true);
+            _animator.SetBool(PossibleInteraction, true);
         }
 
         public void OnQuitRange()
         {
-            //_animator.SetBool("PossibleInteraction", false);
+            _animator.SetBool(PossibleInteraction, false);
         }
     }
 }
