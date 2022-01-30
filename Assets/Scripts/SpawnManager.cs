@@ -20,12 +20,18 @@ public class SpawnManager : MonoBehaviour
     private void RandomizeDiskContainer()
     {
         int index = Random.Range(0, possibleDiskContainers.Length - 1);
-        possibleDiskContainers[index].SetCollectible(disk);
+        SearchableObject container = possibleDiskContainers[index];
+        
+        container.SetCollectible(disk);
+        container.name = "DISK - SELECTED";
     }
     
     private void RandomizeCellphoneContainer()
     {
         int index = Random.Range(0, possibleDiskContainers.Length - 1);
-        possibleCellphoneContainers[index].SetCollectible(cellphone);
+        SearchableObject container = possibleCellphoneContainers[index];
+        
+        container.SetCollectible(cellphone);
+        container.name = "CELLPHONE - SELECTED";
     }
 }

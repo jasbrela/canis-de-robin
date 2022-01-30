@@ -1,5 +1,7 @@
 using System;
 using Enums;
+using InteractableObjects;
+using Interfaces;
 using UnityEngine;
 
 public class EventHandler : MonoBehaviour
@@ -60,6 +62,20 @@ public class EventHandler : MonoBehaviour
     }
     
     
+    public delegate void OnShowPopupMessageWithOptions(ICollectible collectible);
+    private OnShowPopupMessageWithOptions _onShowPopupMessageWithOptions;
+
+    public void ListenToOnShowPopupMessageWithOptions(OnShowPopupMessageWithOptions method)
+    {
+        _onShowPopupMessageWithOptions += method;
+    } 
+    
+    public void TriggerOnShowPopupMessageWithOptions(ICollectible collectible)
+    {
+        _onShowPopupMessageWithOptions?.Invoke(collectible);
+    }
+    
+    
     public delegate void OnInteractWithDisk();
     private OnInteractWithDisk _onInteractWithDisk;
 
@@ -113,5 +129,47 @@ public class EventHandler : MonoBehaviour
     public void TriggerOnMoveElevator(float y)
     {
         _onMoveElevator?.Invoke(y);
+    }
+    
+    
+    public delegate void OnCollectCollectible(Collectibles collectible);
+    private OnCollectCollectible _onCollectCollectible;
+
+    public void ListenToOnCollectCollectible(OnCollectCollectible method)
+    {
+        _onCollectCollectible += method;
+    } 
+    
+    public void TriggerOnCollectCollectible(Collectibles collectible)
+    {
+        _onCollectCollectible?.Invoke(collectible);
+    }
+    
+    
+    public delegate void OnAlarmIsDeactivated(Alarm alarm);
+    private OnAlarmIsDeactivated _onAlarmIsDeactivated;
+
+    public void ListenToOnAlarmIsDeactivated(OnAlarmIsDeactivated method)
+    {
+        _onAlarmIsDeactivated += method;
+    } 
+    
+    public void TriggerOnAlarmIsDeactivated(Alarm alarm)
+    {
+        _onAlarmIsDeactivated?.Invoke(alarm);
+    }
+    
+    
+    public delegate void OnGameOver();
+    private OnGameOver _onGameOver;
+
+    public void ListenToOnGameOver(OnGameOver method)
+    {
+        _onGameOver += method;
+    } 
+    
+    public void TriggerOnGameOver()
+    {
+        _onGameOver?.Invoke();
     }
 }

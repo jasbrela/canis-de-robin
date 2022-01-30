@@ -1,3 +1,4 @@
+using System;
 using Enums;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -14,8 +15,8 @@ namespace Player
         [SerializeField] private float otherMaxVelocity;
         [SerializeField] private float maxDistance;
 
-        private PlayerDirections _lastFacingPlayerDirection = PlayerDirections.Right;
-        private PlayerDirections _otherFacingPlayerDirection = PlayerDirections.Right;
+        private PlayerDirections _lastFacingPlayerDirection = PlayerDirections.Left;
+        private PlayerDirections _otherFacingPlayerDirection = PlayerDirections.Left;
         private bool _otherIsNear;
         private PlayerInput _input;
         private Rigidbody2D _mainCharacterRb2D;
@@ -124,6 +125,14 @@ namespace Player
         private void ChangeFloor(float y)
         {
             transform.position = new Vector3(transform.position.x, y, transform.position.z);
+        }
+
+        private void OnTriggerEnter2D(Collider2D col)
+        {
+            if (col.CompareTag("Deadzone"))
+            {
+                EventHandler.Instance.TriggerOnGameOver();
+            }
         }
     }
 }

@@ -1,85 +1,70 @@
-using System;
 using System.Collections;
 using Interfaces;
-using TMPro;
+using JetBrains.Annotations;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering.Universal;
-using UnityEngine.SceneManagement;
 
 namespace InteractableObjects
 {
-    [RequireComponent(typeof(SpriteRenderer))]
     public class Alarm : MonoBehaviour, IInteractable
     {
-        [SerializeField] private float timerIncrease;
-        [SerializeField] private float secondsToAlarm;
-        [SerializeField] private TextMeshProUGUI timerText;
-        [SerializeField] private GameObject alarmObject;
+        [SerializeField] private int gracePeriod;
+        [SerializeField] private bool isStartAlarm;
+        [CanBeNull][SerializeField] private BoxCollider2D protectedAreaLeft;
+        [CanBeNull][SerializeField] private BoxCollider2D protectedAreaRight;
 
-        [SerializeField] private Light2D light2D;
-        
-        private float _timer;
-        private bool _alarmIsActivated;
-        private Coroutine _alarmCoroutine;
-        private SpriteRenderer _spriteRenderer;
-        
-        void Start()
+        private bool _isDeactivated;
+
+        private void Start()
         {
-            _spriteRenderer = GetComponent<SpriteRenderer>();
-            _timer = secondsToAlarm;
-            _alarmIsActivated = true;
-            StartAlarm();
+            if (isStartAlarm) OnInteract();
         }
 
-        private void StartAlarm()
+        public void ActivateAlarm()
         {
-            alarmObject.SetActive(true);
-            _alarmCoroutine = StartCoroutine(AlarmTimer());
-        }
-    
-        private IEnumerator AlarmTimer()
-        {
-            while (_alarmIsActivated)
-            {
-                yield return new WaitForSecondsRealtime(timerIncrease);
-                _timer -= timerIncrease;
-                timerText.text = FormatTime(_timer);
-                
-                if (!(_timer < 0f)) continue;
-                
-                _timer = 0;
-                StopAlarm();
-                SceneManager.LoadScene(Scenes.GameOver.ToString());
-            }
+            _isDeactivated = false;
+            ProtectAreas();
         }
 
-        private string FormatTime( float time )
+        public void OnInteract()
         {
-            int minutes = (int) time / 60 ;
-            int seconds = (int) time - 60 * minutes;
-            int milliseconds = (int) (10 * (time - minutes * 60 - seconds));
-            return $"{minutes:0}:{seconds:00}.{milliseconds:0}";
+            if (_isDeactivated) return;
+            _isDeactivated = true;
+            EventHandler.Instance.TriggerOnAlarmIsDeactivated(this);
+            FreeAreas();
+            StartCoroutine(StartGracePeriod());
         }
 
-        public void OnInteract() // STOP ALARM
+        private IEnumerator StartGracePeriod()
         {
-            StopAlarm();
+            yield return new WaitForSecondsRealtime(gracePeriod + 0.1f);
+            ActivateAlarm();
         }
 
-        private void StopAlarm()
+        public int GetGracePeriod()
         {
-            StopCoroutine(_alarmCoroutine);
-            alarmObject.SetActive(false);
+            return gracePeriod;
         }
         
         public void OnEnterRange()
         {
-            light2D.intensity = 0.55f;
+            Debug.Log("Entered range of: " + gameObject.name);
         }
 
         public void OnQuitRange()
         {
-            light2D.intensity = 0;
+            Debug.Log("Quit range of: " + gameObject.name);
+        }
+        
+        private void ProtectAreas()
+        {
+            if (protectedAreaLeft != null) protectedAreaLeft.enabled = true;
+            if (protectedAreaRight != null) protectedAreaRight.enabled = true;
+        }
+        
+        private void FreeAreas()
+        {
+            if (protectedAreaLeft != null) protectedAreaLeft.enabled = false;
+            if (protectedAreaRight != null) protectedAreaRight.enabled = false;
         }
     }
 }

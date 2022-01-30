@@ -1,18 +1,61 @@
+using System;
+using Enums;
 using Interfaces;
+using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 namespace InteractableObjects
 {
     public class SearchableObject : MonoBehaviour, IInteractable
     {
-        private ICollectible _collectible;
-
+        [SerializeField] private Collectibles type;
+        
+        [CanBeNull] private ICollectible _collectible;
         private bool _searched;
+
+        private void Start()
+        {
+            EventHandler.Instance.ListenToOnCollectCollectible(OnCollectedCollectible);
+        }
+
+        private void OnCollectedCollectible(Collectibles collectible)
+        {
+            if (_collectible != null && type == collectible)
+            {
+                _searched = true;
+            }
+        }
         
         public void OnInteract()
         {
-            // TODO: if searched, show "already searched" message    else show "found item , pick?"
-            _collectible?.OnCollect();
+            if (_searched)
+            {
+                if (_collectible == null)
+                {
+                    string msg = "Eu tenho quase certeza que passei por aqui antes. Bom, não tem nada.";
+                    EventHandler.Instance.TriggerOnShowPopupMessage(msg);
+                }
+                else
+                {
+                    _collectible.OnCollect();
+                }
+                
+            }
+            else
+            {
+                if (_collectible == null)
+                {
+                    _searched = true;
+                    
+                    string msg = "Não encontrei nada.";
+                    EventHandler.Instance.TriggerOnShowPopupMessage(msg);
+                }
+                else
+                {
+                    EventHandler.Instance.TriggerOnShowPopupMessageWithOptions(_collectible);
+                }
+            }
         }
 
         public void SetCollectible(ICollectible collectible)
@@ -22,12 +65,15 @@ namespace InteractableObjects
 
         public void OnEnterRange()
         {
-            throw new System.NotImplementedException();
+            Debug.Log("Entered range - " + gameObject.name);
+            // show hvoer sprite
         }
 
         public void OnQuitRange()
         {
-            throw new System.NotImplementedException();
+            Debug.Log("Quit range - " + gameObject.name);
+
+            // show normal sprite
         }
     }
 }

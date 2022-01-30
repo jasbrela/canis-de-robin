@@ -4,8 +4,9 @@ using UnityEngine;
 
 namespace InteractableObjects
 {
-    public class Disk : MonoBehaviour, IInteractable, ICollectible
+    public class Disk : MonoBehaviour, ICollectible
     {
+        [SerializeField] private Collectible data;
         [SerializeField] private TextMeshProUGUI passwordText;
         private int _password;
         private string _input;
@@ -23,22 +24,6 @@ namespace InteractableObjects
         private void SetPassword(int pass)
         {
             _password = pass;
-        }
-        
-        
-        public void OnInteract()
-        {
-            EventHandler.Instance.TriggerOnInteractWithDisk();
-        }
-
-        public void OnEnterRange()
-        {
-            /*throw new System.NotImplementedException();*/
-        }
-
-        public void OnQuitRange()
-        {
-            /*throw new System.NotImplementedException();*/
         }
 
         public void OnClickNumber(int number)
@@ -88,7 +73,12 @@ namespace InteractableObjects
 
         public void OnCollect()
         {
-            throw new System.NotImplementedException();
+            EventHandler.Instance.TriggerOnInteractWithDisk();
+        }
+        
+        public Collectible GetData()
+        {
+            return data;
         }
     }
 }
