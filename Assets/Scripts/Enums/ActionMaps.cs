@@ -3,6 +3,7 @@
     public enum ActionMaps
     {
         Player,
-        UI
+        UI,
+        Elevator
     }
 }

@@ -47,7 +47,7 @@
                     "id": "57765ef9-53ac-4162-9dd2-81d95bda9b4f",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Tap",
                     "initialStateCheck": false
                 }
             ],
@@ -91,7 +91,7 @@
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard & Mouse",
                     "action": "ChangeCharacter",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -102,7 +102,7 @@
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard & Mouse",
                     "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -130,7 +130,7 @@
                     "path": "<Keyboard>/enter",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard & Mouse",
                     "action": "ClosePopup",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -141,8 +141,76 @@
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard & Mouse",
                     "action": "ClosePopup",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Elevator",
+            "id": "982a2ec1-d547-4e0c-a129-ef561c92488f",
+            "actions": [
+                {
+                    "name": "Up",
+                    "type": "Button",
+                    "id": "5623bc3f-5735-4cb7-9f83-dc515c42eab1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Down",
+                    "type": "Button",
+                    "id": "896b9729-05dc-41dc-bdb4-8f606d094366",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ElevatorInteract",
+                    "type": "Button",
+                    "id": "1bd5dca6-0702-4e00-8d84-c6dac454e70b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Tap",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "d92593de-5728-46e7-af7c-ca5a8270c403",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard & Mouse",
+                    "action": "Up",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dec6434c-dc17-4fd6-a5ae-042c86a2f626",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard & Mouse",
+                    "action": "Down",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fb331e7f-a9b6-4b1c-a8c3-55342a6e6646",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ElevatorInteract",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

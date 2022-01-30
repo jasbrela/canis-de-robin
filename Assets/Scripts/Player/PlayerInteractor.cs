@@ -81,8 +81,7 @@ namespace Player
             _currentTarget.OnQuitArea();
             _currentTarget = null;
         }
-
-
+        
         private void SetUpControls()
         {
             _input.actions[InputActions.Interact.ToString()].performed += _ => Interact();

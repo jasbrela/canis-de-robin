@@ -31,6 +31,7 @@ public class EventHandler : MonoBehaviour
         }
     }
 
+    
     public delegate void OnChangeFacingDirection(Vector2 vector2, Character mainCharacter);
     private OnChangeFacingDirection _onChangeFacingDirection;
 
@@ -98,5 +99,19 @@ public class EventHandler : MonoBehaviour
     public void TriggerOnPasswordGenerated(int pass)
     {
         _onPasswordGenerated?.Invoke(pass);
+    }
+    
+    
+    public delegate void OnMoveElevator(float y);
+    private OnMoveElevator _onMoveElevator;
+
+    public void ListenToOnMoveElevator(OnMoveElevator method)
+    {
+        _onMoveElevator += method;
+    } 
+    
+    public void TriggerOnMoveElevator(float y)
+    {
+        _onMoveElevator?.Invoke(y);
     }
 }

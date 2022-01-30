@@ -1,4 +1,3 @@
-using System;
 using Enums;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -14,9 +13,9 @@ namespace Player
         [SerializeField] private float otherForce;
         [SerializeField] private float otherMaxVelocity;
         [SerializeField] private float maxDistance;
-        
-        private Directions _lastFacingDirection = Directions.Right;
-        private Directions _otherFacingDirection = Directions.Right;
+
+        private PlayerDirections _lastFacingPlayerDirection = PlayerDirections.Right;
+        private PlayerDirections _otherFacingPlayerDirection = PlayerDirections.Right;
         private bool _otherIsNear;
         private PlayerInput _input;
         private Rigidbody2D _mainCharacterRb2D;
@@ -30,15 +29,17 @@ namespace Player
             _mainCharacterRb2D = human;
             _otherCharacterRb2D = dog;
 
+            EventHandler.Instance.ListenToOnMoveElevator(ChangeFloor);
+            
             SetUpControls();
         }
 
         private void SetUpControls()
         {
-            _input.actions[InputActions.MoveLeft.ToString()].performed += _ => Move(Directions.Left);
+            _input.actions[InputActions.MoveLeft.ToString()].performed += _ => Move(PlayerDirections.Left);
             _input.actions[InputActions.MoveLeft.ToString()].canceled += _ => StopMovement();
-            
-            _input.actions[InputActions.MoveRight.ToString()].performed += _ => Move(Directions.Right);
+
+            _input.actions[InputActions.MoveRight.ToString()].performed += _ => Move(PlayerDirections.Right);
             _input.actions[InputActions.MoveRight.ToString()].canceled += _ => StopMovement();
 
             _input.actions[InputActions.ChangeCharacter.ToString()].performed += _ => ChangeCharacter();
@@ -50,7 +51,7 @@ namespace Player
 
             _otherCharacterRb2D = _mainCharacterRb2D;
             _otherCharacter = _currentCharacter;
-            (_otherFacingDirection, _lastFacingDirection) = (_lastFacingDirection, _otherFacingDirection);
+            (_otherFacingPlayerDirection, _lastFacingPlayerDirection) = (_lastFacingPlayerDirection, _otherFacingPlayerDirection);
 
             switch (_currentCharacter)
             {
@@ -66,15 +67,17 @@ namespace Player
             EventHandler.Instance.TriggerOnChangeCurrentCharacter(_currentCharacter);
         }
 
-        private void Move(Directions dir)
+        private void Move(PlayerDirections dir)
         {
-            Vector2 vec = dir == Directions.Left ? Vector2.left : Vector2.right;
+            if (_mainCharacterRb2D == null) return;
+            
+            Vector2 vec = dir == PlayerDirections.Left ? Vector2.left : Vector2.right;
 
             _mainCharacterRb2D.AddRelativeForce(vec * force, ForceMode2D.Force);
 
-            if (_lastFacingDirection == dir) return;
+            if (_lastFacingPlayerDirection == dir) return;
             
-            _lastFacingDirection = dir;
+            _lastFacingPlayerDirection = dir;
             EventHandler.Instance.TriggerOnChangeFacingDirection(vec, _currentCharacter);
         }
 
@@ -90,12 +93,12 @@ namespace Player
                 if (_otherCharacterRb2D.transform.position.x > _mainCharacterRb2D.transform.position.x)
                 {
                     otherVec = Vector2.left;
-                    _otherFacingDirection = Directions.Left;
+                    _otherFacingPlayerDirection = PlayerDirections.Left;
                 }
                 else
                 {
                     otherVec = Vector2.right;
-                    _otherFacingDirection = Directions.Right;
+                    _otherFacingPlayerDirection = PlayerDirections.Right;
                 }
 
                 _otherCharacterRb2D.AddRelativeForce(otherVec * otherForce, ForceMode2D.Force);
@@ -109,12 +112,18 @@ namespace Player
 
         private void StopMovement()
         {
+            if (_mainCharacterRb2D == null) return;
             _mainCharacterRb2D.velocity = Vector2.zero;
         }
 
         private void StopOtherMovement()
         {
             if (_otherIsNear) _otherCharacterRb2D.velocity = Vector2.zero;
+        }
+        
+        private void ChangeFloor(float y)
+        {
+            transform.position = new Vector3(transform.position.x, y, transform.position.z);
         }
     }
 }

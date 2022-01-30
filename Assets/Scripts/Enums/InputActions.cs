@@ -7,6 +7,9 @@ namespace Enums
         Crouch,
         ChangeCharacter,
         Interact,
-        ClosePopup
+        ClosePopup,
+        Up,
+        Down,
+        ElevatorInteract
     }
 }
