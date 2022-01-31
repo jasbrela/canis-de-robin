@@ -114,19 +114,20 @@ namespace Managers
 
         private void ShowVictoryPopup()
         {
+            ClosePopup();
+            
             victoryButtons.SetActive(true);
             ShowPopupMessage("Agora que eu consegui encontrar os dados sobre a tecnologia para" +
                              " transformar grafite em ouro, tenho uma grande decisão a tomar.");
         }
 
-        private void OnClickGood()
+        public void OnClickGood()
         {
             ClosePopup();
             SceneManager.LoadScene(Scenes.Victory.ToString());
-            // go to good scene
         }
     
-        private void OnClickBad()
+        public void OnClickBad()
         {
             ClosePopup();
             SceneManager.LoadScene(Scenes.Victory.ToString());
