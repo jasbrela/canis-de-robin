@@ -3,6 +3,7 @@ using Interfaces;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Managers
@@ -121,13 +122,14 @@ namespace Managers
         private void OnClickGood()
         {
             ClosePopup();
+            SceneManager.LoadScene(Scenes.Victory.ToString());
             // go to good scene
         }
     
         private void OnClickBad()
         {
             ClosePopup();
-            // go to bad scene
+            SceneManager.LoadScene(Scenes.Victory.ToString());
         }
     }
 }

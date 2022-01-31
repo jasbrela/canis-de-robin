@@ -2,5 +2,6 @@ public enum Scenes
 {
     MainMenu,
     Game,
-    GameOver
+    GameOver,
+    Victory
 }
